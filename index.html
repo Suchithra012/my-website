@@ -288,7 +288,7 @@
             margin-top: 10px;
         }
 
-        .admin-panel.active ~ .products-section .product-actions {
+        body.admin-active .product-actions {
             display: flex;
         }
 
@@ -506,6 +506,7 @@
         function toggleAdmin() {
             const adminPanel = document.getElementById('adminPanel');
             adminPanel.classList.toggle('active');
+            document.body.classList.toggle('admin-active');
             
             const button = document.querySelector('.admin-toggle');
             if (adminPanel.classList.contains('active')) {
