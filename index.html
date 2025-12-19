@@ -46,25 +46,30 @@
         }
 
         .intro {
-            padding: 80px 30px;
+            padding: 120px 30px;
             text-align: center;
-            background: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), 
-                        url('https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=1200&h=400&fit=crop') center/cover;
+            background: linear-gradient(rgba(102, 126, 234, 0.1), rgba(252, 182, 159, 0.15)), 
+                        url('https://images.unsplash.com/photo-1612817288484-6f916006741a?w=1600&h=600&fit=crop') center/cover;
             position: relative;
+            background-attachment: fixed;
         }
 
         .intro h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 2em;
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            font-weight: 700;
         }
 
         .intro p {
-            color: #555;
-            font-size: 1.1em;
-            line-height: 1.6;
+            color: #fff;
+            font-size: 1.3em;
+            line-height: 1.8;
             max-width: 800px;
             margin: 0 auto;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+            font-weight: 500;
         }
 
         .products-section {
@@ -133,13 +138,6 @@
             line-height: 1.5;
         }
 
-        .product-price {
-            font-size: 1.5em;
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
         .buy-button {
             width: 100%;
             padding: 12px;
@@ -158,6 +156,7 @@
         }
 
         .admin-toggle {
+            display: none;
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -174,8 +173,86 @@
             transition: transform 0.2s ease;
         }
 
+        body.show-admin .admin-toggle {
+            display: block;
+        }
+
         .admin-toggle:hover {
             transform: scale(1.05);
+        }
+
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-box h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .login-box button:hover {
+            opacity: 0.9;
+        }
+
+        .cancel-btn {
+            background: #6c757d !important;
+        }
+
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
         }
 
         .admin-panel {
@@ -292,6 +369,21 @@
             display: flex;
         }
 
+        .edit-btn {
+            flex: 1;
+            padding: 8px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .edit-btn:hover {
+            background: #5568d3;
+        }
+
         .delete-btn {
             flex: 1;
             padding: 8px;
@@ -357,6 +449,18 @@
                 font-size: 2em;
             }
             
+            .intro {
+                padding: 80px 20px;
+            }
+
+            .intro h2 {
+                font-size: 2em;
+            }
+
+            .intro p {
+                font-size: 1.1em;
+            }
+            
             .products-grid {
                 grid-template-columns: 1fr;
             }
@@ -393,9 +497,9 @@
                     <div class="product-info">
                         <div class="product-name">Hydrating Serum</div>
                         <div class="product-description">Ultra-hydrating formula with hyaluronic acid for plump, dewy skin</div>
-                        <div class="product-price">$49.99</div>
                         <button class="buy-button" onclick="event.stopPropagation(); openLink('https://example.com/product1')">Shop Now →</button>
                         <div class="product-actions">
+                            <button class="edit-btn" onclick="event.stopPropagation(); editProduct(this)">Edit</button>
                             <button class="delete-btn" onclick="event.stopPropagation(); deleteProduct(this)">Delete</button>
                         </div>
                     </div>
@@ -409,9 +513,9 @@
                     <div class="product-info">
                         <div class="product-name">Vitamin C Brightening Cream</div>
                         <div class="product-description">Powerful antioxidant cream that brightens and evens skin tone</div>
-                        <div class="product-price">$59.99</div>
                         <button class="buy-button" onclick="event.stopPropagation(); openLink('https://example.com/product2')">Shop Now →</button>
                         <div class="product-actions">
+                            <button class="edit-btn" onclick="event.stopPropagation(); editProduct(this)">Edit</button>
                             <button class="delete-btn" onclick="event.stopPropagation(); deleteProduct(this)">Delete</button>
                         </div>
                     </div>
@@ -425,9 +529,9 @@
                     <div class="product-info">
                         <div class="product-name">Gentle Cleanser</div>
                         <div class="product-description">pH-balanced cleanser that removes impurities without stripping skin</div>
-                        <div class="product-price">$34.99</div>
                         <button class="buy-button" onclick="event.stopPropagation(); openLink('https://example.com/product3')">Shop Now →</button>
                         <div class="product-actions">
+                            <button class="edit-btn" onclick="event.stopPropagation(); editProduct(this)">Edit</button>
                             <button class="delete-btn" onclick="event.stopPropagation(); deleteProduct(this)">Delete</button>
                         </div>
                     </div>
@@ -439,13 +543,14 @@
             <h3>📝 Add New Product (Admin Section)</h3>
             
             <div class="instructions">
-                <h4>How to Add Products Daily:</h4>
+                <h4>How to Add & Edit Products:</h4>
                 <ol>
                     <li>Click "Admin Mode" button (bottom right corner) to access this panel</li>
                     <li>Upload a product image from your device</li>
                     <li>Fill in all the product details</li>
                     <li>Paste your affiliate link in the "Affiliate Link" field</li>
                     <li>Click "Add Product" and it appears instantly on your page</li>
+                    <li>To edit a product, click the "Edit" button on the product card</li>
                     <li>To remove a product, click the "Delete" button on the product card</li>
                     <li>Click "Close Admin Panel" when done - customers won't see this section</li>
                 </ol>
@@ -474,16 +579,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="productPrice">Price *</label>
-                    <input type="text" id="productPrice" required placeholder="e.g., $45.99">
-                </div>
-
-                <div class="form-group">
                     <label for="affiliateLink">Affiliate Link (Full URL) *</label>
                     <input type="url" id="affiliateLink" required placeholder="https://youraffiliatelink.com/product123">
                 </div>
 
-                <button type="submit" class="add-product-btn">➕ Add Product</button>
+                <input type="hidden" id="editingIndex" value="">
+
+                <button type="submit" class="add-product-btn" id="submitBtn">➕ Add Product</button>
                 <button type="button" class="close-admin" onclick="toggleAdmin()">Close Admin Panel</button>
             </form>
         </section>
@@ -494,16 +596,75 @@
         </footer>
     </div>
 
-    <button class="admin-toggle" onclick="toggleAdmin()">🔐 Admin Mode</button>
+    <button class="admin-toggle" onclick="showLoginModal()">🔐 Admin Mode</button>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-box">
+            <h3>🔐 Admin Login</h3>
+            <input type="password" id="adminPassword" placeholder="Enter Admin Password" onkeypress="if(event.key==='Enter') checkPassword()">
+            <button onclick="checkPassword()">Login</button>
+            <button class="cancel-btn" onclick="closeLoginModal()">Cancel</button>
+            <div class="error-message" id="errorMessage">❌ Incorrect password!</div>
+        </div>
+    </div>
 
     <script>
         let currentImageData = null;
+        let isAdminAuthenticated = false;
+
+        // Secret key combination to show admin button: Press Ctrl + Shift + A
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                document.body.classList.add('show-admin');
+            }
+        });
+
+        // Admin password - CHANGE THIS TO YOUR OWN SECURE PASSWORD
+        const ADMIN_PASSWORD = 'MySecure123!';
+
+        function showLoginModal() {
+            if (isAdminAuthenticated) {
+                toggleAdmin();
+            } else {
+                document.getElementById('loginModal').classList.add('active');
+                document.getElementById('adminPassword').focus();
+            }
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function checkPassword() {
+            const enteredPassword = document.getElementById('adminPassword').value;
+            
+            if (enteredPassword === ADMIN_PASSWORD) {
+                isAdminAuthenticated = true;
+                closeLoginModal();
+                toggleAdmin();
+                document.querySelector('.admin-toggle').textContent = '🔐 Admin Mode';
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('adminPassword').value = '';
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 3000);
+            }
+        }
 
         function openLink(url) {
             window.open(url, '_blank');
         }
 
         function toggleAdmin() {
+            if (!isAdminAuthenticated) {
+                showLoginModal();
+                return;
+            }
+
             const adminPanel = document.getElementById('adminPanel');
             adminPanel.classList.toggle('active');
             document.body.classList.toggle('admin-active');
@@ -541,37 +702,79 @@
 
             const name = document.getElementById('productName').value;
             const description = document.getElementById('productDescription').value;
-            const price = document.getElementById('productPrice').value;
             const link = document.getElementById('affiliateLink').value;
+            const editingIndex = document.getElementById('editingIndex').value;
 
             const productsGrid = document.getElementById('productsGrid');
-            
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-            productCard.onclick = function() { openLink(link); };
-            
-            productCard.innerHTML = `
-                <div class="product-image">
-                    <img src="${currentImageData}" alt="${name}">
-                </div>
-                <div class="product-info">
-                    <div class="product-name">${name}</div>
-                    <div class="product-description">${description}</div>
-                    <div class="product-price">${price}</div>
-                    <button class="buy-button" onclick="event.stopPropagation(); openLink('${link}')">Shop Now →</button>
-                    <div class="product-actions">
-                        <button class="delete-btn" onclick="event.stopPropagation(); deleteProduct(this)">Delete</button>
-                    </div>
-                </div>
-            `;
 
-            productsGrid.appendChild(productCard);
+            if (editingIndex !== '') {
+                // Edit existing product
+                const productCard = productsGrid.children[editingIndex];
+                productCard.querySelector('.product-image img').src = currentImageData;
+                productCard.querySelector('.product-image img').alt = name;
+                productCard.querySelector('.product-name').textContent = name;
+                productCard.querySelector('.product-description').textContent = description;
+                productCard.onclick = function() { openLink(link); };
+                productCard.querySelector('.buy-button').onclick = function(e) { 
+                    e.stopPropagation(); 
+                    openLink(link); 
+                };
+                
+                alert('✅ Product updated successfully!');
+                document.getElementById('submitBtn').textContent = '➕ Add Product';
+                document.getElementById('editingIndex').value = '';
+            } else {
+                // Add new product
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.onclick = function() { openLink(link); };
+                
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${currentImageData}" alt="${name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${name}</div>
+                        <div class="product-description">${description}</div>
+                        <button class="buy-button" onclick="event.stopPropagation(); openLink('${link}')">Shop Now →</button>
+                        <div class="product-actions">
+                            <button class="edit-btn" onclick="event.stopPropagation(); editProduct(this)">Edit</button>
+                            <button class="delete-btn" onclick="event.stopPropagation(); deleteProduct(this)">Delete</button>
+                        </div>
+                    </div>
+                `;
+
+                productsGrid.appendChild(productCard);
+                alert('✅ Product added successfully!');
+            }
 
             document.getElementById('productForm').reset();
             document.getElementById('imagePreview').innerHTML = '';
             currentImageData = null;
+        }
+
+        function editProduct(button) {
+            const productCard = button.closest('.product-card');
+            const productsGrid = document.getElementById('productsGrid');
+            const index = Array.from(productsGrid.children).indexOf(productCard);
             
-            alert('✅ Product added successfully!');
+            // Get product data
+            const name = productCard.querySelector('.product-name').textContent;
+            const description = productCard.querySelector('.product-description').textContent;
+            const imageData = productCard.querySelector('.product-image img').src;
+            const link = productCard.onclick.toString().match(/openLink\(['"](.+)['"]\)/)[1];
+            
+            // Populate form
+            document.getElementById('productName').value = name;
+            document.getElementById('productDescription').value = description;
+            document.getElementById('affiliateLink').value = link;
+            currentImageData = imageData;
+            document.getElementById('imagePreview').innerHTML = `<img src="${imageData}" alt="Preview">`;
+            document.getElementById('editingIndex').value = index;
+            document.getElementById('submitBtn').textContent = '💾 Update Product';
+            
+            // Scroll to form
+            document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
         }
 
         function deleteProduct(button) {
